@@ -1,0 +1,21 @@
+date,type,description,amount,current balance
+2/14/2026,deposit,Salary,3500,4200
+2/12/2026,debit card,Coffee Shop,-12,700
+2/10/2026,withdrawal,ATM Withdrawal,-100,712
+2/8/2026,deposit,Freelance Payment,600,812
+2/5/2026,interest earned,Savings Interest,2,1412
+2/1/2026,direct payment,Capital One Credit Card,-1200,1414
+1/28/2026,debit card,Groceries,-95,2614
+1/25/2026,debit card,Restaurant,-45,2709
+1/20/2026,deposit,Salary,3500,2754
+1/18/2026,debit card,Gas Station,-40,6254
+1/15/2026,withdrawal,ATM Withdrawal,-60,6294
+1/10/2026,deposit,Freelance Payment,800,6354
+1/5/2026,direct payment,Capital One Credit Card,-1300,7154
+12/28/2025,debit card,Groceries,-100,8454
+12/20/2025,deposit,Salary,3500,8554
+12/18/2025,debit card,Coffee Shop,-15,12054
+12/15/2025,withdrawal,ATM Withdrawal,-80,12069
+12/10/2025,deposit,Freelance Payment,500,12149
+12/5/2025,direct payment,Capital One Credit Card,-1400,12649
+12/1/2025,interest earned,Savings Interest,2,14049
