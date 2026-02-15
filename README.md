@@ -89,3 +89,11 @@ If columns are missing or misspelled, the UI shows an error and highlights the m
 - `src/api/localClient.js` – Local API shim (auth + console logging)
 - `public/` – Static assets (e.g. favicon, logo)
 
+---
+
+## Note
+
+This project was initially developed with assistance from Base44.  
+All business logic, scoring methodology, and financial models were designed and implemented independently.
+
+
