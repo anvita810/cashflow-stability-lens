@@ -66,6 +66,15 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
+          <div className="flex justify-start items-center gap-3 mb-6">
+            <img
+              src="/capital-pack-logo.png"
+              alt="Capital Pack"
+              className="h-10 w-auto object-contain pt-0.5"
+            />
+            <span className="text-3xl font-bold text-purple-200 leading-tight">CAPITAL PACK</span>
+          </div>
+
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 mb-6">
             <Sparkles className="w-4 h-4 text-purple-400" />
             <span className="text-sm text-purple-300 font-medium">Behavioral Finance Analysis</span>
