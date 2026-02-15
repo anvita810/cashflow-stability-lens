@@ -1,119 +1,45 @@
-import React, { useCallback, useState } from 'react';
-import { Upload, FileText, AlertCircle, CheckCircle } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 
-export default function FileUpload({ onFileProcessed, isProcessing }) {
-  const [isDragging, setIsDragging] = useState(false);
-  const [error, setError] = useState(null);
+export default function MetricCard({ metricKey, metric, index }) {
+  if (!metric) return null;
 
-  const handleFile = useCallback((file) => {
-    if (!file) return;
-    
-    if (!file.name.endsWith('.csv')) {
-      setError('Please upload a CSV file');
-      return;
-    }
+  const gradientClass =
+    metric.score >= 80
+      ? 'from-emerald-500/20 to-green-500/10 border-emerald-500/30'
+      : metric.score >= 50
+        ? 'from-amber-500/20 to-orange-500/10 border-amber-500/30'
+        : 'from-red-500/20 to-rose-500/10 border-red-500/30';
 
-    setError(null);
-    const reader = new FileReader();
-    
-    reader.onload = (e) => {
-      onFileProcessed(e.target.result, file.name);
-    };
-    
-    reader.onerror = () => {
-      setError('Failed to read file. Please try again.');
-    };
-    
-    reader.readAsText(file);
-  }, [onFileProcessed]);
-
-  const handleDrop = useCallback((e) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const file = e.dataTransfer.files[0];
-    handleFile(file);
-  }, [handleFile]);
-
-  const handleDragOver = useCallback((e) => {
-    e.preventDefault();
-    setIsDragging(true);
-  }, []);
-
-  const handleDragLeave = useCallback((e) => {
-    e.preventDefault();
-    setIsDragging(false);
-  }, []);
-
-  const handleInputChange = useCallback((e) => {
-    const file = e.target.files[0];
-    handleFile(file);
-  }, [handleFile]);
+  const scoreTextClass =
+    metric.score >= 80
+      ? 'from-emerald-400 to-green-500'
+      : metric.score >= 50
+        ? 'from-amber-400 to-orange-500'
+        : 'from-red-400 to-rose-500';
 
   return (
-    <div className="w-full">
-      <motion.div
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        className={`
-          relative border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 cursor-pointer
-          ${isDragging 
-            ? 'border-purple-500 bg-purple-500/10' 
-            : 'border-slate-600 bg-slate-800/50 hover:border-purple-400 hover:bg-slate-800/80'
-          }
-        `}
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.99 }}
-      >
-        <input
-          type="file"
-          accept=".csv"
-          onChange={handleInputChange}
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          disabled={isProcessing}
-        />
-        
-        <div className="flex flex-col items-center gap-4">
-          <motion.div 
-            className={`
-              p-4 rounded-full 
-              ${isDragging ? 'bg-purple-500/20' : 'bg-gradient-to-br from-purple-500/20 to-blue-500/20'}
-            `}
-            animate={{ scale: isDragging ? 1.1 : 1 }}
-          >
-            <Upload className={`w-8 h-8 ${isDragging ? 'text-purple-400' : 'text-slate-400'}`} />
-          </motion.div>
-          
-          <div>
-            <p className="text-lg font-medium text-slate-200">
-              {isDragging ? 'Drop your file here' : 'Upload bank statement CSV'}
-            </p>
-            <p className="text-sm text-slate-400 mt-1">
-              Drag and drop or click to browse
-            </p>
-          </div>
-          
-          <div className="flex items-center gap-2 text-xs text-slate-500">
-            <FileText className="w-4 h-4" />
-            <span>Required: date, type, description, amount, current balance</span>
-          </div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05 }}
+      className={`p-5 rounded-2xl bg-gradient-to-br ${gradientClass} border backdrop-blur-sm`}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-slate-400 text-sm font-medium">{metric.label}</p>
+          <p className="text-2xl font-bold text-slate-100 mt-1">{metric.display}</p>
+          <p className="text-slate-500 text-xs mt-1">{metric.category}</p>
         </div>
-      </motion.div>
-
-      <AnimatePresence>
-        {error && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="mt-4 p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center gap-3"
-          >
-            <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
-            <p className="text-sm text-red-300">{error}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+        <div
+          className={`text-2xl font-bold bg-gradient-to-br ${scoreTextClass} bg-clip-text text-transparent`}
+        >
+          {metric.score}
+        </div>
+      </div>
+      {metric.interpretation && (
+        <p className="text-slate-400 text-xs mt-3 leading-relaxed">{metric.interpretation}</p>
+      )}
+    </motion.div>
   );
 }
