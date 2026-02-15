@@ -74,7 +74,7 @@ Date,Type,Description,Amount,Current Balance
 1/10/2025,Withdrawal,ATM Withdrawal,-200.00,4874.50
 ```
 
-- **Date**: `M/D/YYYY` or `YYYY-MM-DD`
+- **Date**: `MM/DD/YYYY`
 - **Amount**: numeric (negative for outflows)
 - **Current balance**: numeric, after each transaction
 
