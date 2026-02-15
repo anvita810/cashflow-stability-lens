@@ -15,6 +15,7 @@ import { calculateMetrics } from '@/components/cashflow/metricsCalculator';
 export default function Home() {
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
+  const [errorBold, setErrorBold] = useState(null);
   const [fileName, setFileName] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -28,6 +29,7 @@ export default function Home() {
 
       if (!parseResult.success) {
         setError(parseResult.error);
+        setErrorBold(parseResult.errorBold ?? null);
         setResults(null);
         setIsProcessing(false);
         return;
@@ -37,6 +39,7 @@ export default function Home() {
 
       if (!metrics) {
         setError('Unable to calculate metrics from the provided data.');
+        setErrorBold(null);
         setResults(null);
         setIsProcessing(false);
         return;
@@ -50,6 +53,7 @@ export default function Home() {
   const handleReset = () => {
     setResults(null);
     setError(null);
+    setErrorBold(null);
     setFileName(null);
   };
 
@@ -66,16 +70,17 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 mb-6">
+          {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 mb-6">
             <Sparkles className="w-4 h-4 text-purple-400" />
             <span className="text-sm text-purple-300 font-medium">Behavioral Finance Analysis</span>
-          </div>
+          </div> */}
 
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-100 via-purple-200 to-blue-200 bg-clip-text text-transparent mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold leading-tight py-2 bg-gradient-to-r from-slate-100 via-purple-200 to-blue-200 bg-clip-text text-transparent mb-4">
             Cashflow Stability Lens
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-           Upload transactional banking data to produce a stability assessment containing income predictability, surplus sustainability, and liquidity exposure to better understand your customer's credit card approval odds.
+          Assess short-term financial stability using recent cash flow data. <br />
+          Upload bank transactions to receive a stability score and risk assessment.
           </p>
         </motion.header>
 
@@ -96,7 +101,20 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30"
                 >
-                  <p className="text-red-300 text-sm whitespace-pre-wrap">{error}</p>
+                  <p className="text-red-300 text-sm whitespace-pre-wrap">
+                    {errorBold
+                      ? (() => {
+                          const parts = error.split(errorBold);
+                          return (
+                            <>
+                              {parts[0]}
+                              <strong className="font-semibold text-red-200">{errorBold}</strong>
+                              {parts[1]}
+                            </>
+                          );
+                        })()
+                      : error}
+                  </p>
                 </motion.div>
               )}
 
@@ -190,7 +208,7 @@ export default function Home() {
                 className="text-center py-6 border-t border-slate-800"
               >
                 <p className="text-slate-500 text-sm">
-                  🔒 All data is processed locally in your browser. No transaction data is stored or
+                  All data is processed locally in your browser. No transaction data is stored or
                   transmitted.
                 </p>
               </motion.div>
