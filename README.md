@@ -93,7 +93,7 @@ If columns are missing or misspelled, the UI shows an error and highlights the m
 
 ## Source Acknowledgment
 
-This project was initially developed with assistance from Base44.  
+This project was initially developed with assistance from Base44. Cursor was also utilized as a tool for debugging. 
 All business logic, scoring methodology, and financial models were designed and implemented independently.
 
 
