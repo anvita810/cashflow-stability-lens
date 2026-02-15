@@ -53,23 +53,6 @@ npm run dev
 
 - Open **http://localhost:5173** in your browser (Vite may use a different port if 5173 is in use; check the terminal).
 
-### Other commands
-
-| Command           | Description                    |
-|-------------------|--------------------------------|
-| `npm run build`   | Production build in `dist/`    |
-| `npm run preview` | Serve the production build     |
-| `npm run lint`    | Run ESLint                     |
-| `npm run lint:fix`| Run ESLint with auto-fix       |
-
-### Optional: environment variables
-
-- No env vars are required for local run.
-- If you add a backend later, you can use `.env.local` with:
-  ```env
-  VITE_API_URL=http://localhost:3000
-  ```
-
 ---
 
 ## CSV format
@@ -96,8 +79,6 @@ Date,Type,Description,Amount,Current Balance
 - **Current balance**: numeric, after each transaction
 
 If columns are missing or misspelled, the UI shows an error and highlights the missing column names. You can fix the file and re-upload (including re-selecting the same filename).
-
----
 
 ## Troubleshooting
 
