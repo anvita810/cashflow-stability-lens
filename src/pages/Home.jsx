@@ -124,15 +124,30 @@ export default function Home() {
                 transition={{ delay: 0.3 }}
                 className="mt-8 p-6 rounded-2xl bg-slate-800/30 border border-slate-700/30"
               >
-                <h3 className="text-slate-300 font-medium mb-3">Expected CSV Format</h3>
-                <div className="overflow-x-auto">
-                  <code className="text-xs text-slate-400 block whitespace-pre">
-                    {`Date,Type,Description,Amount,Current Balance
-1/5/2025,Deposit,Direct Deposit - Employer,3500.00,5200.00
-1/7/2025,Debit Card,Grocery Store,-125.50,5074.50
-1/10/2025,Withdrawal,ATM Withdrawal,-200.00,4874.50`}
-                  </code>
-                </div>
+                <div className="flex flex-col items-center text-center mt-6">
+
+  <h3 className="text-slate-300 font-medium mb-4 max-w-2xl">
+    The CSV file must follow the structure below, in the exact order shown:
+  </h3>
+
+  <div className="bg-slate-900 border border-slate-700 rounded-xl p-6 shadow-md max-w-3xl w-full overflow-x-auto">
+
+    <p className="text-slate-400 text-sm mb-3 tracking-wide uppercase">
+      Example (Sample Format)
+    </p>
+
+    <code className="text-sm text-slate-300 whitespace-pre block font-mono leading-relaxed">
+{`Date, Type, Description, Amount, Current Balance
+
+1/5/2025, Deposit, Direct Deposit - Employer, 3500.00, 5200.00
+1/7/2025, Debit Card, Grocery Store, -125.50, 5074.50
+1/10/2025, Withdrawal, ATM Withdrawal, -200.00, 4874.50`}
+    </code>
+
+  </div>
+
+</div>
+
               </motion.div>
             </motion.div>
           ) : (
