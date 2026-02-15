@@ -1,32 +1,40 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { Upload, FileText, AlertCircle, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function FileUpload({ onFileProcessed, isProcessing }) {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState(null);
+  const inputRef = useRef(null);
+
+  const clearInput = useCallback(() => {
+    if (inputRef.current) inputRef.current.value = '';
+  }, []);
 
   const handleFile = useCallback((file) => {
     if (!file) return;
-    
+
     if (!file.name.endsWith('.csv')) {
       setError('Please upload a CSV file');
+      clearInput();
       return;
     }
 
     setError(null);
     const reader = new FileReader();
-    
+
     reader.onload = (e) => {
       onFileProcessed(e.target.result, file.name);
+      clearInput();
     };
-    
+
     reader.onerror = () => {
       setError('Failed to read file. Please try again.');
+      clearInput();
     };
-    
+
     reader.readAsText(file);
-  }, [onFileProcessed]);
+  }, [onFileProcessed, clearInput]);
 
   const handleDrop = useCallback((e) => {
     e.preventDefault();
@@ -67,6 +75,7 @@ export default function FileUpload({ onFileProcessed, isProcessing }) {
         whileTap={{ scale: 0.99 }}
       >
         <input
+          ref={inputRef}
           type="file"
           accept=".csv"
           onChange={handleInputChange}
