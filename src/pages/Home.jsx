@@ -15,6 +15,7 @@ import { calculateMetrics } from '@/components/cashflow/metricsCalculator';
 export default function Home() {
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
+  const [errorBold, setErrorBold] = useState(null);
   const [fileName, setFileName] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -28,6 +29,7 @@ export default function Home() {
 
       if (!parseResult.success) {
         setError(parseResult.error);
+        setErrorBold(parseResult.errorBold ?? null);
         setResults(null);
         setIsProcessing(false);
         return;
@@ -37,6 +39,7 @@ export default function Home() {
 
       if (!metrics) {
         setError('Unable to calculate metrics from the provided data.');
+        setErrorBold(null);
         setResults(null);
         setIsProcessing(false);
         return;
@@ -50,6 +53,7 @@ export default function Home() {
   const handleReset = () => {
     setResults(null);
     setError(null);
+    setErrorBold(null);
     setFileName(null);
   };
 
@@ -78,14 +82,14 @@ export default function Home() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 mb-6">
             <Sparkles className="w-4 h-4 text-purple-400" />
             <span className="text-sm text-purple-300 font-medium">Behavioral Finance Analysis</span>
-          </div>
+          </div> */}
 
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-100 via-purple-200 to-blue-200 bg-clip-text text-transparent mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold leading-tight py-2 bg-gradient-to-r from-slate-100 via-purple-200 to-blue-200 bg-clip-text text-transparent mb-4">
             Cashflow Stability Lens
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Assess short-term financial stability through behavioral cashflow analysis. Upload bank
-            transaction data to generate a comprehensive stability assessment.
+          Assess short-term financial stability using recent cash flow data. <br />
+          Upload bank transactions to receive a stability score and risk assessment.
           </p>
         </motion.header>
 
@@ -106,7 +110,20 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30"
                 >
-                  <p className="text-red-300 text-sm whitespace-pre-wrap">{error}</p>
+                  <p className="text-red-300 text-sm whitespace-pre-wrap">
+                    {errorBold
+                      ? (() => {
+                          const parts = error.split(errorBold);
+                          return (
+                            <>
+                              {parts[0]}
+                              <strong className="font-semibold text-red-200">{errorBold}</strong>
+                              {parts[1]}
+                            </>
+                          );
+                        })()
+                      : error}
+                  </p>
                 </motion.div>
               )}
 
@@ -116,15 +133,30 @@ export default function Home() {
                 transition={{ delay: 0.3 }}
                 className="mt-8 p-6 rounded-2xl bg-slate-800/30 border border-slate-700/30"
               >
-                <h3 className="text-slate-300 font-medium mb-3">Expected CSV Format</h3>
-                <div className="overflow-x-auto">
-                  <code className="text-xs text-slate-400 block whitespace-pre">
-                    {`Date,Type,Description,Amount,Current Balance
-1/5/2025,Deposit,Direct Deposit - Employer,3500.00,5200.00
-1/7/2025,Debit Card,Grocery Store,-125.50,5074.50
-1/10/2025,Withdrawal,ATM Withdrawal,-200.00,4874.50`}
-                  </code>
-                </div>
+                <div className="flex flex-col items-center text-center mt-6">
+
+  <h3 className="text-slate-300 font-medium mb-4 max-w-2xl">
+    The CSV file must follow the structure below, in the exact order shown:
+  </h3>
+
+  <div className="bg-slate-900 border border-slate-700 rounded-xl p-6 shadow-md max-w-3xl w-full overflow-x-auto">
+
+    <p className="text-slate-400 text-sm mb-3 tracking-wide uppercase">
+      Example (Sample Format)
+    </p>
+
+    <code className="text-sm text-slate-300 whitespace-pre block font-mono leading-relaxed">
+{`Date, Type, Description, Amount, Current Balance
+
+1/5/2025, Deposit, Direct Deposit - Employer, 3500.00, 5200.00
+1/7/2025, Debit Card, Grocery Store, -125.50, 5074.50
+1/10/2025, Withdrawal, ATM Withdrawal, -200.00, 4874.50`}
+    </code>
+
+  </div>
+
+</div>
+
               </motion.div>
             </motion.div>
           ) : (
@@ -185,7 +217,7 @@ export default function Home() {
                 className="text-center py-6 border-t border-slate-800"
               >
                 <p className="text-slate-500 text-sm">
-                  🔒 All data is processed locally in your browser. No transaction data is stored or
+                  All data is processed locally in your browser. No transaction data is stored or
                   transmitted.
                 </p>
               </motion.div>
