@@ -19,9 +19,11 @@ export function parseCSV(csvText) {
   );
   
   if (missingColumns.length > 0) {
-    return { 
-      success: false, 
-      error: `Missing required columns: ${missingColumns.join(', ')}. Required: ${REQUIRED_COLUMNS.join(', ')}` 
+    const boldPart = missingColumns.join(', ');
+    return {
+      success: false,
+      error: `Missing required columns: ${boldPart}. Ensure the spelling of the columns match what is shown in the expected CSV format.`,
+      errorBold: boldPart
     };
   }
 
