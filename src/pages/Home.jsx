@@ -79,11 +79,6 @@ export default function Home() {
             <span className="text-3xl font-bold text-purple-200 leading-tight">CAPITAL PACK</span>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 mb-6">
-            <Sparkles className="w-4 h-4 text-purple-400" />
-            <span className="text-sm text-purple-300 font-medium">Behavioral Finance Analysis</span>
-          </div> */}
-
           <h1 className="text-4xl md:text-5xl font-bold leading-tight py-2 bg-gradient-to-r from-slate-100 via-purple-200 to-blue-200 bg-clip-text text-transparent mb-4">
             Cashflow Stability Lens
           </h1>
@@ -141,19 +136,26 @@ export default function Home() {
 
   <div className="bg-slate-900 border border-slate-700 rounded-xl p-6 shadow-md max-w-3xl w-full overflow-x-auto">
 
-    <p className="text-slate-400 text-sm mb-3 tracking-wide uppercase">
+    <p className="text-slate-400 text-bold text-sm mb-3 tracking-wide uppercase">
       Example (Sample Format)
     </p>
+    <code className="text-sm text-slate-300 whitespace-pre block font-mono leading-relaxed text-left">
+{`Date, Type, Description, Amount, Current Balance`.replace(/^[ \t]+/gm, '')}
+    </code>
 
-    <code className="text-sm text-slate-300 whitespace-pre block font-mono leading-relaxed">
-{`Date, Type, Description, Amount, Current Balance
-
-1/5/2025, Deposit, Direct Deposit - Employer, 3500.00, 5200.00
+    <code className="text-sm text-slate-300 whitespace-pre block font-mono leading-relaxed text-left">
+{`1/5/2025, Deposit, Direct Deposit - Employer, 3500.00, 5200.00
 1/7/2025, Debit Card, Grocery Store, -125.50, 5074.50
-1/10/2025, Withdrawal, ATM Withdrawal, -200.00, 4874.50`}
+1/10/2025, Withdrawal, ATM Withdrawal, -200.00, 4874.50`.replace(/^[ \t]+/gm, '')}
     </code>
 
   </div>
+
+  <ul className="text-slate-300 font-normal mb-4 max-w-2xl pt-4 list-disc list-outside pl-6 text-left">
+    <li>The first row must be the header row, with the column names in the exact order shown above.</li>
+    <li>The "Date" column must be in the format of MM/DD/YYYY.</li>
+    <li>The "Type" column must be one of the following: Deposit, Withdrawal, Debit Card, Zelle, Direct Payment, Interest Earned.</li>
+  </ul>
 
 </div>
 
